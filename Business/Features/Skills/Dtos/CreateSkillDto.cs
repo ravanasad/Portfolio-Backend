@@ -1,0 +1,9 @@
+namespace Business.Features.Skills.Dtos
+{
+    public class CreateSkillDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public byte Value { get; set; } 
+    }
+}

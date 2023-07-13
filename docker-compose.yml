@@ -1,0 +1,33 @@
+version: '3.9'
+services:
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: WebApi/Dockerfile
+    depends_on:
+      - mssql
+    environment:
+      - DB_CONNECT=Data Source=mssql;Initial Catalog=Project2;User ID=sa;Password=Esed2003@;TrustServerCertificate=True;
+    ports:
+      - "8080:80"
+      - "443:443"
+    networks:
+      - network1
+  mssql:
+    container_name: MsSql22
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - SA_PASSWORD=Esed2003@
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    networks:
+      - network1
+networks:
+  network1:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/24
+          gateway: 172.22.0.1
